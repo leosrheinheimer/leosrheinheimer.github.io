@@ -5,11 +5,10 @@ title: REACH
 
 Robotic Extension for Autonomous Component Handoff
 
-*The arm was disassembled after the capstone presentation and the codebase was lost when I
-reflashed the Pi, so this is a writeup reconstructed from CAD, the architecture diagrams, and my
-own notes, rather than a code repository.*
+![REACH arm, final CAD](hero.png)
 
-<!-- image: hero CAD render -->
+*REACH in its final configuration. This is CAD rather than a photograph, since the arm was
+disassembled after the capstone presentation.*
 
 REACH is a 5-DOF robotic arm that picks up a pair of folding steel pliers and hands them to a
 person. It runs on salvaged FRC hardware, meaning parts from FIRST Robotics Competition, a high
@@ -23,12 +22,12 @@ handoff by clicking through those saved positions one at a time. The pickup and 
 end in testing, with the pliers lifted off a flat surface and carried to a position where I could
 take them off the magnet by hand.
 
-| | |
+| Spec | |
 |---|---|
 | Degrees of freedom | 5: base, shoulder, elbow, wrist, magnet |
 | Total reach | 41 in |
 | Motors | 3x NEO v1.1 brushless |
-| Gearboxes | VersaPlanetary, 50:1 base, 150:1 shoulder, 30:1 elbow |
+| Gearing | VersaPlanetary: 50:1 base, 150:1 shoulder, 50:1 elbow |
 | End effector | 180 N peak electromagnet |
 | Lateral accuracy | ±1 in at the end effector |
 
@@ -39,7 +38,10 @@ jogging, which shipped. Tool handoff, meaning pick up a tool and hand it to some
 And autonomy through computer vision and inverse kinematics, which I dropped about a month in.
 Vision and IK were always stretch goals, and a month into the build it was clear that getting the
 arm's own software working was going to take the entire schedule, so I cut them instead of
-half-building both. The acronym is left over from the original plan.
+half-building both. The acronym is left over from the original plan. The project also carried a
+codename before it had a real one, DumE, after the workshop arm in Iron Man that hands Tony Stark
+his tools, which is roughly what I wanted this thing to do and is why the Pi's hostname shows up as
+DumE.local in the screenshots below.
 
 Three things constrained this project the whole way through. Everything was salvaged: the NEOs,
 the VersaPlanetary gearboxes, the SPARK MAX controllers, and the battery all came off a
@@ -56,22 +58,23 @@ debugging was mine.
 
 ## Design decisions
 
-<!-- image: gripper vs magnet comparison -->
+![Servo gripper compared with the electromagnet end effector](gripper-vs-magnet.png)
+
+*The original three-finger servo gripper on the left and the electromagnet that replaced it on the
+right, swapped in about two weeks before the presentation.*
 
 The original end effector was a three-finger servo-driven gripper, and I iterated two versions of
 it. With about two weeks left before the presentation I asked what I could cut to get a better
 demo, and the answer was the gripper. Swapping it for a single electromagnet dropped three servos
 along with their power draw and mounting, and it removed grip-force tuning entirely. The reason I
-did it was that a magnet tolerates positional error instead of fighting it, since the base alone
-runs a 2.5 degree deadband, and a gripper has to close on an object in a specific place while a
-magnet only has to touch metal. The cost is that the arm only picks up ferrous objects, and the
-tool it hands over is a pair of steel pliers.
-
-<!-- image: pliers photo -->
+did it was that a magnet tolerates positional error instead of fighting it, since the base runs a
+1.5 degree deadband, and a gripper has to close on an object in a specific place while a magnet
+only has to touch metal. The cost is that the arm only picks up ferrous objects, and the tool it
+hands over is a pair of steel pliers.
 
 The pliers themselves are part of the design. Mechanical slop and deadband mean I can only put the
 end effector within about an inch of where I want it laterally, and that error has to go somewhere,
-so it went into the tool. Folding pliers collapse to a flat face roughly 1.5 by 3.5 inches, which
+so it went into the tool. Folding pliers collapse to a flat face roughly 1.65 by 3.6 inches, which
 is large enough that an inch of positioning error still lands the magnet on metal, and flat enough
 for the magnet to hold at all, which it will not do on a curved or knurled surface.
 
@@ -85,19 +88,21 @@ kinematics libraries, but it also would have meant debugging a framework at the 
 debugging salvaged hardware, alone, on a Pi 4.
 
 On the mechanical side, the shoulder carries the moment of the entire arm at extension, so it gets
-a 150:1 VersaPlanetary stack, while the base runs 50:1 because it fights inertia rather than
-gravity and the elbow runs 30:1 because it carries only the forearm and whatever is on the end of
-it. I went with equal 18-inch arm segments instead of the original 20 and 26, since equal segments
-give cleaner kinematics and lower peak shoulder torque, and with more iteration I could have
-determined the optimal arm sizing for my use case, but this was a demonstration. The elbow motor
-mounts directly on the joint rather than a foot back on an HTD5M belt as originally designed,
+a 150:1 VersaPlanetary stack built as 3x5x10, while the base and the elbow both run 50:1. The base
+reaches that ratio differently from the others, with a 5:1 VersaPlanetary driving a 10:1 turret
+reduction rather than a single planetary stack, which matters later for what its encoder can and
+cannot see. I went with equal 18-inch arm segments instead of the original 20 and 26, since equal
+segments give cleaner kinematics and lower peak shoulder torque, and with more iteration I could
+have determined the optimal arm sizing for my use case, but this was a demonstration. The elbow
+motor mounts directly on the joint rather than a foot back on an HTD5M belt as originally designed,
 accepting slightly worse shoulder torque in exchange for deleting the belt and its tensioner.
 
 Control runs through a browser instead of a physical controller. Flask serves the UI off the Pi, so
 any laptop on the network becomes a control station, with no app to install and no custom hardware
 to build, and I could tune PID values live from whatever machine I was sitting at. It also had a
 failure mode I did not plan for, since the school network's security meant I could not reach the Pi
-from another machine, so operation moved to a local UI running on the Pi's own display.
+from another machine, so operation moved to a separate local interface running on the Pi's own
+display.
 
 Servo power bypasses the PCA9685. The breakout drives the wrist servo's signal, but power comes
 straight from a buck converter with the board's V+ rail left unconnected. The board's actual
@@ -120,14 +125,23 @@ backlash. Gravity gets handled by the feedforward term instead.
 
 ## Architecture
 
-<!-- image: wiring diagram -->
+![Complete system wiring diagram](wiring.png)
+
+*Complete system wiring. This is a design artifact from partway through the build rather than a
+record of the machine that shipped. The USB webcam shown was for the computer vision that got cut
+and was never part of the final system, and the shoulder controller is labeled CAN 12 here but ran
+as CAN 31.*
 
 Power runs in three domains. A 12V 18Ah SLA battery feeds an FRC Power Distribution Hub, which
 sends 40A channels to the three SPARK MAX controllers and 5A channels to the buck converter and the
 electromagnet relay. The buck drops 12V to 6.8V for the wrist servo. The Pi runs off a separate USB
 power bank, and all grounds tie to a common reference.
 
-<!-- image: software architecture diagram -->
+![Software architecture diagram](software.png)
+
+*Software architecture. This diagram shows the laptop browser path only. The separate operator
+interface on the Pi's own display was built later, after the school network blocked remote access,
+and does not appear here.*
 
 The software is one Python process with three background threads. One broadcasts a CAN heartbeat
 frame every 20ms, without which the SPARK MAX controllers fault out after roughly 100ms and stop
@@ -151,17 +165,22 @@ output_deg = motor_deg / gear_ratio * scale
 The 16.82 constant was measured empirically over five full rotations rather than taken from a
 datasheet. Scale is 1.0 on the base and shoulder and 360.0 on the elbow, for reasons covered under
 Unresolved. Each joint's control law computes duty as KP times error, minus KD times measured
-velocity, plus KG, clamped to a maximum duty and with a deadband around the target. State persists
-to three JSON files: per-joint gains, the encoder offset at each joint's zero position, and named
-poses.
+velocity, plus KG, clamped to a maximum duty of 12% on all three joints and with a deadband around
+the target. State persists to three JSON files: per-joint gains, the encoder offset at each joint's
+zero position, and named poses.
 
-<!-- image: UI screenshot -->
+![Flask development interface](ui.png)
+
+*The Flask development interface. It was captured with the motor controllers powered down, which is
+why every live readout shows ??, and before the per-position KG values existed, which is why KG
+reads 0 on all three joints.*
 
 There are two interfaces, and the split turned out to be useful. The Flask UI is the development
 interface, exposing live encoder values, RPM, mode, per-joint PID sliders, and manual jog, which is
-what I needed while tuning. The UI on the Pi's own display is the operator interface, where I teach
-a position, set KG for it, and drive the arm between saved poses. Building the second one was not
-planned, and it is what kept the arm operable once the school network blocked remote access.
+what I needed while tuning. The interface on the Pi's own display is a visually separate operator
+interface, where I teach a position, set KG for it, and drive the arm between saved poses. Building
+the second one was not planned, and it is what kept the arm operable once the school network
+blocked remote access.
 
 ## What broke
 
@@ -226,14 +245,14 @@ not my tuning ability. This came up most on the base, which swings a much larger
 any other joint. Three changes fixed it and I would call them roughly equal contributors: I dropped
 KD, widened the deadband, and cut max duty to 12% of what the motor could actually do. None of
 those are elegant, and together they were enough. The reason there was a floor on how well this
-could be tuned is mechanical: when the motor is on the 50 side of a 50:1 planetary gearbox, its
-encoder does not have a great idea of what is happening at the 1 side. There is only so much you
-can tune out when the sensor cannot see the thing you are trying to correct. Later, once I started
-tuning specifically for how the arm needed to move in the demo, I added a transition pose that
-pulls the arm back into a standard configuration before the base rotates. This keeps the rotational
-inertia the base sees roughly constant from one move to the next, so a single PID profile covers
-every base rotation instead of needing a profile per pose. Whatever the magnet is carrying is not
-heavy enough to change that meaningfully.
+could be tuned is mechanical: when the motor sits behind a 5:1 planetary feeding a 10:1 turret
+reduction, its encoder does not have a great idea of what is happening fifty turns later at the
+joint. There is only so much you can tune out when the sensor cannot see the thing you are trying
+to correct. Later, once I started tuning specifically for how the arm needed to move in the demo, I
+added a transition pose that pulls the arm back into a standard configuration before the base
+rotates. This keeps the rotational inertia the base sees roughly constant from one move to the
+next, so a single PID profile covers every base rotation instead of needing a profile per pose.
+Whatever the magnet is carrying is not heavy enough to change that meaningfully.
 
 ## What didn't ship
 
@@ -244,7 +263,8 @@ six sliders for adjusting the thresholds against real lighting, and then I tuned
 the values down, and never came back to it. Nothing about it was blocked technically, and I cut it
 because about a month in it was clear that getting the arm's own software working was going to take
 the whole schedule, so I dropped it rather than half-build it and left it as something to pick up
-over the summer if I was still interested.
+over the summer if I was still interested. The webcam still appears in the wiring diagram above,
+which is where the plan for it stopped.
 
 Inverse kinematics got cut in the last two weeks. The solver was written and visualized in
 matplotlib during the design phase, and it never ran on the arm. IK survived longer than vision
@@ -277,10 +297,10 @@ the first thing I implemented.
 There are two smaller things I would go back and finish. I would budget for salvaged hardware,
 since two weeks went to electrical faults that came with the parts rather than with my design, and
 I planned the schedule as though free hardware was free. And I would finish what I started tuning,
-since the elbow never got a systematic tuning pass and I no longer have the gains it actually ran
-on, only the fact that it ran with a KG value I found by hand at each taught position, and since
-the 180N magnet is dramatic overkill for an arm that hands over a pair of pliers. Neither broke
-anything, but both are places where I stopped at "it works" without going back.
+since the elbow never got a tuning pass of its own and ran the whole project on the base's gains,
+KP 0.08 and KD 0.014, and since the 180N magnet is dramatic overkill for an arm that hands over a
+pair of pliers. Neither broke anything, but both are places where I stopped at "it works" without
+going back.
 
 The thing I would actually tell someone starting a project like this is to work backwards from the
 deliverable. I spent the early months building this like a tree from the roots up, doing Pi setup,
@@ -295,7 +315,7 @@ against a deadline and are the first two things I would undo if the deadline wen
 ## Unresolved
 
 **Elbow encoder scaling.** Device 13 reports position roughly 360 times smaller than devices 11 and
-12, which are identical hardware on the same bus. A scale constant corrects it in software. I never
+31, which are identical hardware on the same bus. A scale constant corrects it in software. I never
 found the root cause, and my best guess is a unit conversion where that device reports rotations and
 the others report something else, but I never confirmed it.
 
@@ -308,5 +328,9 @@ the arm, write PID values, and drive the motors. That is acceptable for a bench 
 network and would not be acceptable anywhere shared.
 
 ---
+
+A note on sources: the arm was disassembled after the capstone presentation and the codebase was
+lost when I reflashed the Pi, so this writeup is reconstructed from CAD, the architecture diagrams,
+the development interface, and my own notes.
 
 Built 2026. FRC Team 1452 hardware, Raspberry Pi 4, REV SPARK MAX, NEO v1.1, Python and Flask.

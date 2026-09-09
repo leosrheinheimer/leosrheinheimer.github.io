@@ -29,8 +29,8 @@ take them off the magnet by hand.
     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 </div>
 
-*[REPLACE THIS CAPTION: describe exactly what the clip shows. If it is one continuous take of the
-full sequence, say so. If it starts mid-motion or cuts between positions, say that instead.]*
+*Thirty seconds of the handoff. I click through the taught positions one at a time, the magnet
+picks the pliers up off the surface, and the arm brings them to where I can take them by hand.*
 
 | Spec | |
 |---|---|

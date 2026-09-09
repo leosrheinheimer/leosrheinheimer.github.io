@@ -5,10 +5,10 @@ title: REACH
 
 Robotic Extension for Autonomous Component Handoff
 
-![REACH arm, final CAD](hero.png)
+![The arm on the bench, wired to battery and power distribution](build-bench.jpg)
 
-*REACH in its final configuration. This is CAD rather than a photograph, since the arm was
-disassembled after the capstone presentation.*
+*The arm during testing, on the bench with the SLA battery, the power distribution hub, and the
+laptop running the tuning interface.*
 
 REACH is a 5-DOF robotic arm that picks up a pair of folding steel pliers and hands them to a
 person. It runs on salvaged FRC hardware, meaning parts from FIRST Robotics Competition, a high
@@ -21,6 +21,16 @@ a web browser. The arm only reaches positions I physically taught it, and I driv
 handoff by clicking through those saved positions one at a time. The pickup and handoff ran end to
 end in testing, with the pliers lifted off a flat surface and carried to a position where I could
 take them off the magnet by hand.
+
+<div style="max-width:360px;margin:2.2em 0 0.7em;">
+  <iframe style="width:100%;aspect-ratio:9/16;border:0;"
+    src="https://www.youtube-nocookie.com/embed/zx9uRuI9cNM"
+    title="REACH tool handoff" allowfullscreen
+    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+</div>
+
+*[REPLACE THIS CAPTION: describe exactly what the clip shows. If it is one continuous take of the
+full sequence, say so. If it starts mid-motion or cuts between positions, say that instead.]*
 
 | Spec | |
 |---|---|
@@ -56,21 +66,33 @@ mechanical sizing, the encoder calibration, and the PID and gravity compensation
 control loop implementation was written with Claude Code against that specification, and the
 debugging was mine.
 
+![Working on the arm](working.jpg)
+
+*Most of the build happened like this.*
+
 ## Design decisions
 
-![Servo gripper compared with the electromagnet end effector](gripper-vs-magnet.png)
+![REACH arm, final CAD](hero.png)
 
-*The original three-finger servo gripper on the left and the electromagnet that replaced it on the
-right, swapped in about two weeks before the presentation.*
+*The final design in CAD. The arm was disassembled after the capstone presentation, so the model is
+the only complete record of the assembled machine.*
 
-The original end effector was a three-finger servo-driven gripper, and I iterated two versions of
-it. With about two weeks left before the presentation I asked what I could cut to get a better
-demo, and the answer was the gripper. Swapping it for a single electromagnet dropped three servos
-along with their power draw and mounting, and it removed grip-force tuning entirely. The reason I
+The original end effector was a two-finger servo-driven gripper, and I iterated two versions of it.
+With about two weeks left before the presentation I asked what I could cut to get a better demo,
+and the answer was the gripper. Swapping it for a single electromagnet dropped three servos along
+with their power draw and mounting. Two of them were the gripper's fingers, and the third was in
+the wrist, which needed a pair to hold the gripper's mass according to the torque figures on the
+servo spec sheet, where the lighter magnet needs only one. It also removed grip-force tuning
+entirely. The reason I
 did it was that a magnet tolerates positional error instead of fighting it, since the base runs a
 1.5 degree deadband, and a gripper has to close on an object in a specific place while a magnet
 only has to touch metal. The cost is that the arm only picks up ferrous objects, and the tool it
 hands over is a pair of steel pliers.
+
+![Servo gripper compared with the electromagnet end effector](gripper-vs-magnet.png)
+
+*The original two-finger servo gripper on the left and the electromagnet that replaced it on the
+right, swapped in about two weeks before the presentation.*
 
 The pliers themselves are part of the design. Mechanical slop and deadband mean I can only put the
 end effector within about an inch of where I want it laterally, and that error has to go somewhere,
@@ -96,6 +118,11 @@ segments give cleaner kinematics and lower peak shoulder torque, and with more i
 have determined the optimal arm sizing for my use case, but this was a demonstration. The elbow
 motor mounts directly on the joint rather than a foot back on an HTD5M belt as originally designed,
 accepting slightly worse shoulder torque in exchange for deleting the belt and its tensioner.
+
+![Printed base, NEO motor, and the turret ring gear](base-turret.jpg)
+
+*The base assembly. The NEO drives a planetary stage into the large ring gear, which is the second
+half of the base's 50:1 reduction.*
 
 Control runs through a browser instead of a physical controller. Flask serves the UI off the Pi, so
 any laptop on the network becomes a control station, with no app to install and no custom hardware
@@ -331,6 +358,6 @@ network and would not be acceptable anywhere shared.
 
 A note on sources: the arm was disassembled after the capstone presentation and the codebase was
 lost when I reflashed the Pi, so this writeup is reconstructed from CAD, the architecture diagrams,
-the development interface, and my own notes.
+the development interface, build photographs, and my own notes.
 
 Built 2026. FRC Team 1452 hardware, Raspberry Pi 4, REV SPARK MAX, NEO v1.1, Python and Flask.

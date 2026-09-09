@@ -1,6 +1,5 @@
 ---
 layout: home
-title: Leo Rheinheimer
 ---
 
 I'm a mechanical engineering student and will be attending USC Viterbi in spring 2027,

@@ -1,0 +1,205 @@
+---
+---
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+
+// Minima variables, set before the import so the theme picks them up.
+$base-font-family: "IBM Plex Serif", Georgia, serif;
+$base-font-size:   18px;
+$base-line-height: 1.7;
+$spacing-unit:     32px;
+$text-color:       #16202a;
+$background-color: #ffffff;
+$brand-color:      #1f6f63;
+$grey-color:       #5b6b7a;
+$grey-color-light: #e3e8ec;
+$grey-color-dark:  #33414f;
+$content-width:    960px;
+$on-palm:          600px;
+$on-laptop:        960px;
+
+@import "minima";
+
+// ---- Header -------------------------------------------------------------
+
+.site-header {
+  border-top: 0;
+  border-bottom: 1px solid $grey-color-light;
+}
+
+.site-title,
+.site-nav .page-link {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+}
+
+.site-title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// ---- Measure ------------------------------------------------------------
+// Text holds a readable measure; diagrams break out to the right.
+
+.post-content,
+.home {
+  max-width: none;
+}
+
+.post-content > p,
+.post-content > ul,
+.post-content > ol,
+.post-content > h2,
+.post-content > h3,
+.post-content > h4,
+.post-content > pre,
+.post-content > hr,
+.home > p,
+.home > ul,
+.home > h2 {
+  max-width: 42rem;
+}
+
+.post-content > p:has(> img) {
+  max-width: none;
+}
+
+// ---- Headings -----------------------------------------------------------
+
+h1, h2, h3, h4 {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  letter-spacing: -0.015em;
+  color: $text-color;
+}
+
+.post-title {
+  font-size: 3.2rem;
+  font-weight: 600;
+  line-height: 1.05;
+  margin-bottom: 0.15em;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.4em;
+  padding-top: 0.7em;
+  border-top: 1px solid $grey-color-light;
+}
+
+h3 {
+  font-size: 1.12rem;
+  font-weight: 600;
+  margin-top: 2em;
+  color: $grey-color-dark;
+}
+
+// ---- Images and captions ------------------------------------------------
+
+.post-content img {
+  display: block;
+  width: 58rem;
+  max-width: 100%;
+  margin: 2.2em 0 0.7em;
+}
+
+// The italic line directly after an image is its caption.
+.post-content > p > img + em,
+.post-content > p > em:only-child {
+  display: block;
+  max-width: 34rem;
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1.5;
+  color: $grey-color;
+  border-left: 2px solid $brand-color;
+  padding-left: 0.9em;
+  margin-bottom: 2.4em;
+}
+
+// ---- Spec table ---------------------------------------------------------
+
+.post-content table {
+  max-width: 42rem;
+  border-collapse: collapse;
+  border: 0;
+  margin: 2em 0;
+  font-size: 0.95rem;
+}
+
+.post-content table thead {
+  display: none;
+}
+
+.post-content table td {
+  border: 0;
+  border-bottom: 1px solid $grey-color-light;
+  padding: 0.55em 0;
+  background: none;
+}
+
+.post-content table td:first-child {
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  color: $grey-color;
+  width: 34%;
+  padding-right: 1.5em;
+}
+
+.post-content table td:last-child {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.88rem;
+}
+
+// ---- Code ---------------------------------------------------------------
+
+pre, code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 0.86rem;
+  border-radius: 2px;
+}
+
+pre.highlight, div.highlighter-rouge {
+  background: #f4f6f8;
+  border: 1px solid $grey-color-light;
+}
+
+// ---- Links --------------------------------------------------------------
+
+.post-content a {
+  color: $brand-color;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+
+a:focus-visible,
+.site-title:focus-visible,
+.page-link:focus-visible {
+  outline: 2px solid $brand-color;
+  outline-offset: 3px;
+}
+
+// ---- Footer -------------------------------------------------------------
+// Minima prints the site title and description here, which duplicates the
+// header. Keep the description only.
+
+.site-footer {
+  border-top: 1px solid $grey-color-light;
+  font-size: 0.85rem;
+  color: $grey-color;
+}
+
+.footer-heading,
+.site-footer .footer-col-1 {
+  display: none;
+}
+
+.site-footer .footer-col-wrapper {
+  font-size: 0.85rem;
+}
+
+// ---- Small screens ------------------------------------------------------
+
+@media screen and (max-width: 600px) {
+  .post-title { font-size: 2.1rem; }
+  .post-content img { width: 100%; }
+}

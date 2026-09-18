@@ -41,7 +41,17 @@ picks the pliers up off the surface, and the arm brings them to where I can take
 | End effector | 180 N peak electromagnet |
 | Lateral accuracy | ±1 in at the end effector |
 
-## Goals and constraints
+## Contents
+
+- [Goals and constraints](#goals), what shipped, what I cut, and what free hardware cost
+- [Design decisions](#design), the electromagnet swap, the pliers, CAN over PWM, and the gearing
+- [Architecture](#architecture), power domains, threads, encoder math, and the two interfaces
+- [What broke](#what-broke), four failures, including a joint that overran and broke its own mount
+- [What didn't ship](#what-didnt-ship), computer vision and inverse kinematics
+- [What I'd do differently](#what-id-do-differently)
+- [Unresolved](#unresolved), three problems I never got to the bottom of
+
+## Goals and constraints {#goals}
 
 I started with three goals. Closed-loop position control on every joint instead of open-loop
 jogging, which shipped. Tool handoff, meaning pick up a tool and hand it to someone, which shipped.
@@ -70,7 +80,7 @@ debugging was mine.
 
 *Most of the build happened like this.*
 
-## Design decisions
+## Design decisions {#design}
 
 ![REACH arm, final CAD](hero.png)
 
@@ -150,7 +160,7 @@ velocity, plus KG. I left I at zero throughout, because steady-state error on th
 from mechanical backlash rather than an unmodeled constant load, and an integrator cannot remove
 backlash. Gravity gets handled by the feedforward term instead.
 
-## Architecture
+## Architecture {#architecture}
 
 ![Complete system wiring diagram](wiring.png)
 
@@ -209,7 +219,7 @@ interface, where I teach a position, set KG for it, and drive the arm between sa
 the second one was not planned, and it is what kept the arm operable once the school network
 blocked remote access.
 
-## What broke
+## What broke {#what-broke}
 
 ### The shoulder overran and broke its mount.
 
@@ -281,7 +291,7 @@ rotates. This keeps the rotational inertia the base sees roughly constant from o
 next, so a single PID profile covers every base rotation instead of needing a profile per pose.
 Whatever the magnet is carrying is not heavy enough to change that meaningfully.
 
-## What didn't ship
+## What didn't ship {#what-didnt-ship}
 
 Computer vision got cut about a month in, and it got further than I remembered. I had a working HSV
 threshold pipeline that converted to HSV, thresholded on a red-orange band, found contours,
@@ -308,7 +318,7 @@ was not an accident, but I did not see the second-order effect at the time. Choo
 effector that forgives positioning error is what made it possible, two weeks later, to delete IK
 entirely.
 
-## What I'd do differently
+## What I'd do differently {#what-id-do-differently}
 
 The first thing I would build with more time is continuous gravity compensation. KG is currently a
 value I tuned by hand at each taught position, which works because the arm only ever goes to
@@ -339,7 +349,7 @@ asking that question. Working backwards gets you a demo, and it also gets you a 
 a model belongs and a positioning system that only reaches three places, which were correct calls
 against a deadline and are the first two things I would undo if the deadline went away.
 
-## Unresolved
+## Unresolved {#unresolved}
 
 **Elbow encoder scaling.** Device 13 reports position roughly 360 times smaller than devices 11 and
 31, which are identical hardware on the same bus. A scale constant corrects it in software. I never

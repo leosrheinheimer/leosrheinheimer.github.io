@@ -5,6 +5,21 @@ title: REACH
 
 Robotic Extension for Autonomous Component Handoff
 
+<nav class="toc" markdown="1">
+
+## Contents
+{: .toc-heading}
+
+- [Goals and constraints](#goals)<span class="gloss">, what shipped, what I cut, and what free hardware cost</span>
+- [Design decisions](#design)<span class="gloss">, the electromagnet swap, the pliers, CAN over PWM, and the gearing</span>
+- [Architecture](#architecture)<span class="gloss">, power domains, threads, encoder math, and the two interfaces</span>
+- [What broke](#what-broke)<span class="gloss">, four failures, including a joint that overran and broke its own mount</span>
+- [What didn't ship](#what-didnt-ship)<span class="gloss">, computer vision and inverse kinematics</span>
+- [What I'd do differently](#what-id-do-differently)
+- [Unresolved](#unresolved)<span class="gloss">, three problems I never got to the bottom of</span>
+
+</nav>
+
 ![The arm on the bench, wired to battery and power distribution](build-bench.jpg)
 
 *The arm during testing, on the bench with the SLA battery, the power distribution hub, and the
@@ -40,16 +55,6 @@ picks the pliers up off the surface, and the arm brings them to where I can take
 | Gearing | VersaPlanetary: 50:1 base, 150:1 shoulder, 50:1 elbow |
 | End effector | 180 N peak electromagnet |
 | Lateral accuracy | ±1 in at the end effector |
-
-## Contents
-
-- [Goals and constraints](#goals), what shipped, what I cut, and what free hardware cost
-- [Design decisions](#design), the electromagnet swap, the pliers, CAN over PWM, and the gearing
-- [Architecture](#architecture), power domains, threads, encoder math, and the two interfaces
-- [What broke](#what-broke), four failures, including a joint that overran and broke its own mount
-- [What didn't ship](#what-didnt-ship), computer vision and inverse kinematics
-- [What I'd do differently](#what-id-do-differently)
-- [Unresolved](#unresolved), three problems I never got to the bottom of
 
 ## Goals and constraints {#goals}
 

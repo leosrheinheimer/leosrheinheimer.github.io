@@ -197,12 +197,6 @@ a:focus-visible,
   font-size: 0.85rem;
 }
 
-// ---- Small screens ------------------------------------------------------
-
-@media screen and (max-width: 600px) {
-  .post-title { font-size: 2.1rem; }
-  .post-content img { width: 100%; }
-}
 // ---- Table of contents --------------------------------------------------
 
 .toc {
@@ -213,14 +207,21 @@ a:focus-visible,
     border-top: 0;
     margin-top: 0;
     padding-top: 0;
-    font-size: 1.15em;
+    font-size: 1.33em;
   }
 
-  ul { list-style: none; padding-left: 0; margin-bottom: 0; }
-  li { margin-bottom: 0.45em; line-height: 1.5; }
-  .gloss { color: #5b6b7a; }
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  li { margin-bottom: 0.5em; line-height: 1.5; }
+  .gloss { color: $grey-color; }
 }
 
+// Float it beside the text only when there is genuinely room for it.
 @media screen and (min-width: 1500px) {
   .toc {
     position: fixed;
@@ -229,7 +230,15 @@ a:focus-visible,
     width: 11.5rem;
     margin: 0;
 
+    .toc-heading { font-size: 1em; }
     li { font-size: 0.85em; margin-bottom: 0.6em; line-height: 1.4; }
     .gloss { display: none; }
   }
+}
+
+// ---- Small screens ------------------------------------------------------
+
+@media screen and (max-width: 600px) {
+  .post-title { font-size: 2.1rem; }
+  .post-content img { width: 100%; }
 }

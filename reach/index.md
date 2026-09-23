@@ -25,7 +25,7 @@ Robotic Extension for Autonomous Component Handoff
 *The arm during testing, on the bench with the SLA battery, the power distribution hub, and the
 laptop running the tuning interface.*
 
-REACH is a 5-DOF robotic arm that picks up a pair of folding steel pliers and hands them to a
+REACH is a 4-DOF robotic arm that picks up a pair of folding steel pliers and hands them to a
 person. It runs on salvaged FRC hardware, meaning parts from FIRST Robotics Competition, a high
 school league whose robots are built out of a standard ecosystem of brushless motors and CAN bus
 motor controllers, and a Raspberry Pi talks to those controllers over CAN. Three joints run
@@ -49,7 +49,7 @@ picks the pliers up off the surface, and the arm brings them to where I can take
 
 | Spec | |
 |---|---|
-| Degrees of freedom | 5: base, shoulder, elbow, wrist, magnet |
+| Degrees of freedom | 4: base, shoulder, elbow, wrist, magnet |
 | Total reach | 41 in |
 | Motors | 3x NEO v1.1 brushless |
 | Gearing | VersaPlanetary: 50:1 base, 150:1 shoulder, 50:1 elbow |

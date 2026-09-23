@@ -10,7 +10,7 @@ cutting gaskets. I work on robotics and control systems.
 
 ## Projects
 
-**[REACH](reach/)** — a 5-DOF robotic arm built from salvaged FRC hardware, with closed-loop
+**[REACH](reach/)** — a 4-DOF robotic arm built from salvaged FRC hardware, with closed-loop
 position control on three joints and an electromagnet end effector. Writeup covers the design
 tradeoffs, the four things that broke, and what I would do differently.
 

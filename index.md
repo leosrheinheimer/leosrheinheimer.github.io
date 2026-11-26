@@ -14,6 +14,10 @@ cutting gaskets. I work on robotics and control systems.
 position control on three joints and an electromagnet end effector. Writeup covers the design
 tradeoffs, the four things that broke, and what I would do differently.
 
+**[HOLD](hold/)** — a single-joint torque test rig where I wrote all the firmware. I predicted the
+holding torque from statics, locked the prediction before testing, missed by a factor of two, and
+traced the miss to gearbox losses at breakaway.
+
 ## Contact
 
 [leosrheinheimer@gmail.com](mailto:leosrheinheimer@gmail.com) · [LinkedIn](https://www.linkedin.com/in/leorheinheimer/)

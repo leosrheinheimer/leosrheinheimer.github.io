@@ -3,6 +3,11 @@ layout: page
 title: HOLD
 ---
 
+<style>
+  .post-content img { max-width: 42rem; }
+  .post-content img.photo { max-width: 34rem; }
+</style>
+
 A single-joint torque test rig
 
 <nav class="toc" markdown="1">
@@ -20,7 +25,7 @@ A single-joint torque test rig
 
 </nav>
 
-![The HOLD rig on its baseplate with washers on the 300 mm hole](hero.jpg)
+![The HOLD rig on its baseplate with washers on the 300 mm hole](hero.jpg){: .photo}
 
 *The rig, with washers taped on at the 300 mm hole.*
 
@@ -62,7 +67,7 @@ with a number at the end: predict the holding torque, measure it, and compare.
 
 ## The rig {#rig}
 
-![Top-down view of the baseplate wiring](rig-top.jpg)
+![Top-down view of the baseplate wiring](rig-top.jpg){: .photo}
 
 *The baseplate from above: motor driver on the left, Pico on the breadboard, zero-pin servo in the
 corner.*
@@ -81,7 +86,7 @@ To zero the encoder, the arm needs a hard stop at a known angle. The first one w
 until the washers on the loaded arm started hitting it. Now it's a printed lever on a hobby servo
 that swings out at +155.9°, past vertical, and swings back out of the way for testing.
 
-![The zero-pin servo next to the arm hub](pin.jpg)
+![The zero-pin servo next to the arm hub](pin.jpg){: .photo}
 
 *The zero pin is the printed lever on the servo next to the hub.*
 

@@ -641,3 +641,149 @@ img { max-width: 100%; height: auto; }
   opacity: 1;
   transform: none;
 }
+
+
+// ---- Contents rail (wide screens) ----------------------------------------
+// site.js copies the contents list into a rail beside the article once the
+// reader scrolls past the inline list, and marks the section in view.
+
+.toc-rail {
+  position: fixed;
+  top: 7.5rem;
+  left: calc(50% - (#{$measure} + 4rem) / 2 - 15.5rem);
+  width: 13rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-8px);
+  transition: opacity 0.3s, transform 0.3s, visibility 0s 0.3s;
+
+  &.is-shown {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 0.3s, transform 0.3s;
+  }
+
+  ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid $line;
+  }
+
+  li { margin: 0; }
+
+  a {
+    display: flex;
+    gap: 0.75em;
+    padding: 0.45rem 0 0.45rem 1rem;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    font-size: 0.8rem;
+    line-height: 1.35;
+    color: $muted;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover { color: $bright; }
+  }
+
+  .toc-rail__n {
+    font-family: $mono;
+    font-size: 0.7rem;
+    padding-top: 0.1em;
+    color: $muted;
+  }
+
+  a.is-active {
+    color: $bright;
+    border-left-color: $accent;
+
+    .toc-rail__n { color: $accent; }
+  }
+}
+
+@media (max-width: 1279px) {
+  .toc-rail { display: none; }
+}
+
+.post-content h2 { scroll-margin-top: 5.5rem; }
+
+// ---- Photo lightbox -------------------------------------------------------
+
+.post-content img.zoomable { cursor: zoom-in; }
+
+.lightbox {
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 2.5rem;
+  border: 0;
+  background: transparent;
+  cursor: zoom-out;
+
+  &::backdrop {
+    background: rgba(12, 14, 15, 0.9);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: calc(100vh - 8rem);
+    object-fit: contain;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  }
+
+  p {
+    max-width: 44rem;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  &[open] img { animation: lightbox-in 0.25s cubic-bezier(.2, .7, .2, 1); }
+}
+
+.lightbox__close {
+  position: fixed;
+  top: 1rem;
+  right: 1.25rem;
+  font-family: $mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: rgba(255, 255, 255, 0.75);
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover { color: #fff; }
+}
+
+@keyframes lightbox-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (max-width: 760px) {
+  .lightbox { padding: 1rem; }
+  .lightbox img { max-height: calc(100vh - 7rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox[open] img { animation: none; }
+  .toc-rail, .toc-rail.is-shown { transition: none; transform: none; }
+}

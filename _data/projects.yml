@@ -3,7 +3,7 @@
   url: /hold/
   image: /hold/hero.jpg
   position: 50% 45%
-  year: 2026
+  year: "Oct–Nov 2026"
   tags: Test rig · MicroPython · Statics
   summary: >-
     A single-joint torque test rig where I wrote all the firmware. I predicted the holding
@@ -14,7 +14,7 @@
   url: /reach/
   image: /reach/build-bench.jpg
   position: 35% 38%
-  year: 2026
+  year: "Mar–May 2026"
   tags: 4-DOF arm · CAN · Python
   summary: >-
     A 4-DOF robotic arm built from salvaged FRC hardware, with closed-loop position control on

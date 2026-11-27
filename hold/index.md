@@ -2,6 +2,7 @@
 layout: page
 title: HOLD
 subtitle: A single-joint torque test rig
+model_viewer: true
 ---
 
 ![The HOLD rig on its baseplate with washers on the 300 mm hole](hero.jpg){: .photo}
@@ -60,6 +61,14 @@ I wanted a project where I could quantify the result, so I set HOLD up as a test
 the end: predict the holding torque, measure it, and compare.
 
 ## The rig {#rig}
+
+<div class="model">
+  <model-viewer src="rig.glb" alt="3D model of the HOLD rig: baseplate, gearmotor, electronics and the printed arm"
+    camera-controls auto-rotate rotation-per-second="12deg" camera-orbit="35deg 65deg 80%"
+    exposure="0.75" shadow-intensity="1" tone-mapping="neutral" loading="lazy"></model-viewer>
+</div>
+
+*The Onshape model of the rig. Drag to rotate, scroll or pinch to zoom.*
 
 ![Top-down view of the baseplate wiring](rig-top.jpg){: .photo}
 

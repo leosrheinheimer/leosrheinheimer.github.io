@@ -432,6 +432,20 @@ img { max-width: 100%; height: auto; }
   }
 
   iframe { display: block; }
+
+  .model {
+    margin: 2.5rem 0 0.75rem;
+    border: 1px solid $line;
+    background: $bg-2;
+  }
+
+  model-viewer {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    --poster-color: transparent;
+  }
 }
 
 // ---- Spec table -----------------------------------------------------------

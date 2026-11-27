@@ -129,10 +129,9 @@ committed it before the sweep.
 
 ![Predicted and measured load torque against arm angle](loadTorque.png)
 
-*The black line is the prediction. The shaded band runs from the drop measurement up to the lift
-measurement on Nov 25, and the dashed grey lines are the same two edges from the locked Nov 21 test.
-The dots and the dashed teal line are the corrected estimate explained below. Hover or tap the chart
-for the values at each angle.*
+*The black line is the prediction. The shaded band and the dashed orange lines run from the drop
+measurement up to the lift measurement on two different days. The dots and the dashed blue line are
+the corrected estimate explained below.*
 
 The measured load torque read 41 to 111% high at every angle. The calibration wasn't the problem,
 since recalibrating gave a slope within 4% of the original. The motor wasn't hot, and rerunning

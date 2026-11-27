@@ -4,7 +4,7 @@ layout: default
 <header class="page-head">
   <div class="page-head__contours" aria-hidden="true"></div>
   <div class="wrap page-head__inner">
-    <p class="label">{% for project in site.data.projects %}{% if project.url == page.url %}{{ project.year }} · {{ project.tags }}{% endif %}{% endfor %}</p>
+    <p class="label">{% for project in site.data.projects %}{% if project.url == page.url %}{{ project.number }} / {{ project.year }} · {{ project.tags }}{% endif %}{% endfor %}</p>
     <h1 class="page-head__title">{{ page.title }}</h1>
     {% if page.subtitle %}<p class="page-head__subtitle">{{ page.subtitle }}</p>{% endif %}
   </div>

@@ -1,5 +1,6 @@
 # Projects on the landing page, newest first.
 - title: HOLD
+  number: "02"
   url: /hold/
   image: /hold/hero.jpg
   position: 50% 45%
@@ -11,6 +12,7 @@
     traced the miss to gearbox losses at breakaway.
 
 - title: REACH
+  number: "01"
   url: /reach/
   image: /reach/build-bench.jpg
   position: 35% 38%

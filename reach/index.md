@@ -374,4 +374,4 @@ A note on sources: the arm was disassembled after the capstone presentation and 
 lost when I reflashed the Pi, so this writeup is reconstructed from CAD, the architecture diagrams,
 the development interface, build photographs, and my own notes.
 
-Built 2026. FRC Team 1452 hardware, Raspberry Pi 4, REV SPARK MAX, NEO v1.1, Python and Flask.
+Built March to May 2026. FRC Team 1452 hardware, Raspberry Pi 4, REV SPARK MAX, NEO v1.1, Python and Flask.

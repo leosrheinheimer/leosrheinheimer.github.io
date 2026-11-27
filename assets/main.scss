@@ -158,11 +158,15 @@ img { max-width: 100%; height: auto; }
   border-bottom: 1px solid $line;
 }
 
+// The contour field is pinned to the window: the page scrolls over it.
+// clip-path keeps the pinned layer inside the hero (overflow alone can't
+// clip a fixed child).
 .hero__contours,
 .page-head__contours {
   position: absolute;
   inset: 0;
-  background: url("img/contours.svg") center / cover no-repeat;
+  clip-path: inset(0);
+  background: url("img/contours.svg") center / cover no-repeat fixed;
 }
 
 .hero__contours::after,
@@ -177,10 +181,10 @@ img { max-width: 100%; height: auto; }
 .page-head__contours.is-live { background: none; }
 
 .contours-svg {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 .hero__inner { position: relative; }

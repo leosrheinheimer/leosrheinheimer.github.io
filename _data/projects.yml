@@ -1,0 +1,22 @@
+# Projects on the landing page, newest first.
+- title: HOLD
+  url: /hold/
+  image: /hold/hero.jpg
+  position: 50% 45%
+  year: 2026
+  tags: Test rig · MicroPython · Statics
+  summary: >-
+    A single-joint torque test rig where I wrote all the firmware. I predicted the holding
+    torque from statics, locked the prediction before testing, missed by a factor of two, and
+    traced the miss to gearbox losses at breakaway.
+
+- title: REACH
+  url: /reach/
+  image: /reach/build-bench.jpg
+  position: 35% 38%
+  year: 2026
+  tags: 4-DOF arm · CAN · Python
+  summary: >-
+    A 4-DOF robotic arm built from salvaged FRC hardware, with closed-loop position control on
+    three joints and an electromagnet end effector. The write-up covers the design tradeoffs,
+    the four things that broke, and what I would do differently.

@@ -1,244 +1,594 @@
 ---
 ---
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+// White ground, black type, spaced capitals for labels, contour lines as the
+// only ornament, and one accent: a deep teal blue, after Ford's Adriatic Blue.
 
-// Minima variables, set before the import so the theme picks them up.
-$base-font-family: "IBM Plex Serif", Georgia, serif;
-$base-font-size:   18px;
-$base-line-height: 1.7;
-$spacing-unit:     32px;
-$text-color:       #16202a;
-$background-color: #ffffff;
-$brand-color:      #1f6f63;
-$grey-color:       #5b6b7a;
-$grey-color-light: #e3e8ec;
-$grey-color-dark:  #33414f;
-$content-width:    960px;
-$on-palm:          600px;
-$on-laptop:        960px;
+$bg:      #fff;
+$bg-2:    #f3f4f4;
+$text:    #2b2b2b;
+$bright:  #000;
+$muted:   #666;
+$line:    #e2e2e2;
+$accent:  #1C636B;
+$accent-dark: #144A50;
 
-@import "minima";
+$display: "Barlow Semi Condensed", "Arial Narrow", sans-serif;
+$body:    "IBM Plex Sans", system-ui, sans-serif;
+$mono:    "IBM Plex Mono", ui-monospace, monospace;
 
-// ---- Header -------------------------------------------------------------
+$wrap:    72rem;
+$measure: 40rem;
 
-.site-header {
-  border-top: 0;
-  border-bottom: 1px solid $grey-color-light;
+// ---- Base -----------------------------------------------------------------
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: $bg;
+  color: $text;
+  font-family: $body;
+  font-size: 18px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-.site-title,
-.site-nav .page-link {
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
-}
+::selection { background: $accent; color: #fff; }
 
-.site-title {
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-// ---- Measure ------------------------------------------------------------
-// Text holds a readable measure; diagrams break out to the right.
-
-.post-content,
-.home {
-  max-width: none;
-}
-
-.post-content > p,
-.post-content > ul,
-.post-content > ol,
-.post-content > h2,
-.post-content > h3,
-.post-content > h4,
-.post-content > pre,
-.post-content > hr,
-.home > p,
-.home > ul,
-.home > h2 {
-  max-width: 42rem;
-}
-
-.post-content > p:has(> img) {
-  max-width: none;
-}
-
-// ---- Headings -----------------------------------------------------------
-
-h1, h2, h3, h4 {
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
-  letter-spacing: -0.015em;
-  color: $text-color;
-}
-
-.post-title {
-  font-size: 3.2rem;
-  font-weight: 600;
-  line-height: 1.05;
-  margin-bottom: 0.15em;
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 2.4em;
-  padding-top: 0.7em;
-  border-top: 1px solid $grey-color-light;
-}
-
-h3 {
-  font-size: 1.12rem;
-  font-weight: 600;
-  margin-top: 2em;
-  color: $grey-color-dark;
-}
-
-// ---- Images and captions ------------------------------------------------
-
-.post-content img {
-  display: block;
-  width: 58rem;
-  max-width: 100%;
-  margin: 2.2em 0 0.7em;
-}
-
-// The italic line directly after an image is its caption.
-.post-content > p > img + em,
-.post-content > p > em:only-child {
-  display: block;
-  max-width: 34rem;
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
-  font-size: 0.82rem;
-  font-style: normal;
-  line-height: 1.5;
-  color: $grey-color;
-  border-left: 2px solid $brand-color;
-  padding-left: 0.9em;
-  margin-bottom: 2.4em;
-}
-
-// ---- Spec table ---------------------------------------------------------
-
-.post-content table {
-  max-width: 42rem;
-  border-collapse: collapse;
-  border: 0;
-  margin: 2em 0;
-  font-size: 0.95rem;
-}
-
-.post-content table thead {
-  display: none;
-}
-
-.post-content table td {
-  border: 0;
-  border-bottom: 1px solid $grey-color-light;
-  padding: 0.55em 0;
-  background: none;
-}
-
-.post-content table td:first-child {
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
-  color: $grey-color;
-  width: 34%;
-  padding-right: 1.5em;
-}
-
-.post-content table td:last-child {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.88rem;
-}
-
-// ---- Code ---------------------------------------------------------------
-
-pre, code {
-  font-family: "IBM Plex Mono", ui-monospace, monospace;
-  font-size: 0.86rem;
-  border-radius: 2px;
-}
-
-pre.highlight, div.highlighter-rouge {
-  background: #f4f6f8;
-  border: 1px solid $grey-color-light;
-}
-
-// ---- Links --------------------------------------------------------------
-
-.post-content a {
-  color: $brand-color;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
+a { color: $accent; }
 
 a:focus-visible,
-.site-title:focus-visible,
-.page-link:focus-visible {
-  outline: 2px solid $brand-color;
-  outline-offset: 3px;
+.project:focus-visible {
+  outline: 2px solid $accent;
+  outline-offset: 4px;
 }
 
-// ---- Footer -------------------------------------------------------------
-// Minima prints the site title and description here, which duplicates the
-// header. Keep the description only.
+img { max-width: 100%; height: auto; }
 
-.site-footer {
-  border-top: 1px solid $grey-color-light;
+.wrap {
+  width: 100%;
+  max-width: $wrap;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.label {
+  font-family: $mono;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: $muted;
+  margin: 0 0 1.5rem;
+}
+
+.button {
+  display: inline-block;
+  font-family: $display;
+  font-weight: 600;
   font-size: 0.85rem;
-  color: $grey-color;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  background: $accent;
+  border: 1px solid $accent;
+  padding: 0.75em 1.6em;
+  transition: background 0.2s, color 0.2s;
 }
 
-.footer-heading,
-.site-footer .footer-col-1 {
-  display: none;
+// ---- Header ---------------------------------------------------------------
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid $line;
 }
 
-.site-footer .footer-col-wrapper {
+.site-header--overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 0;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 4.5rem;
+}
+
+.brand,
+.site-nav a {
+  font-family: $display;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.brand {
+  font-size: 1rem;
+  letter-spacing: 0.22em;
+  color: $bright;
+}
+
+.site-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.site-nav a {
   font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: $muted;
+  transition: color 0.2s;
+
+  &:hover { color: $bright; }
+  &[aria-current="page"] { color: $accent; }
 }
 
-// ---- Table of contents --------------------------------------------------
+// ---- Home: hero -----------------------------------------------------------
+
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 64vh;
+  padding: 8rem 0 4rem;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+}
+
+.hero__contours,
+.page-head__contours {
+  position: absolute;
+  inset: 0;
+  background: url("img/contours.svg") center / cover no-repeat;
+}
+
+.hero__contours::after,
+.page-head__contours::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, $bg 0%, rgba(255, 255, 255, 0.15) 55%, rgba(255, 255, 255, 0.5) 100%);
+}
+
+.hero__inner { position: relative; }
+
+.hero .label,
+.page-head .label { color: $accent; }
+
+.hero__title {
+  font-family: $display;
+  font-weight: 600;
+  font-size: clamp(3rem, 13vw, 8.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: $bright;
+  margin: 0 0 1.75rem;
+}
+
+.hero__tagline {
+  max-width: 36rem;
+  font-size: 1.15rem;
+  color: $text;
+  margin: 0;
+}
+
+// ---- Home: about ----------------------------------------------------------
+
+.about {
+  padding-top: 4.5rem;
+  padding-bottom: 6rem;
+}
+
+.about__text {
+  max-width: $measure;
+
+  p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: $text;
+    margin: 0 0 1em;
+  }
+}
+
+// ---- Home: projects -------------------------------------------------------
+
+.projects {
+  padding-top: 5rem;
+  padding-bottom: 0;
+}
+
+.project {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  padding: 3rem 0;
+  border-top: 1px solid $line;
+  color: inherit;
+  text-decoration: none;
+
+  &:last-of-type { border-bottom: 1px solid $line; }
+
+  &:nth-of-type(even) {
+    grid-template-columns: 1fr 1.15fr;
+
+    .project__media { order: 2; }
+  }
+
+  &:hover,
+  &:focus-visible {
+    .project__media img { filter: saturate(1); transform: scale(1.02); }
+    .button { background: $accent-dark; border-color: $accent-dark; }
+  }
+}
+
+.project__media {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: $bg-2;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85);
+    transition: filter 0.4s, transform 0.6s;
+  }
+}
+
+.project__meta {
+  font-family: $mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: $accent;
+  margin: 0 0 0.75rem;
+}
+
+.project__title {
+  font-family: $display;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 5vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $bright;
+  margin: 0 0 1.25rem;
+}
+
+.project__summary {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: $bright;
+  margin: 0 0 1rem;
+}
+
+.project__tags {
+  font-family: $mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $muted;
+  margin: 0 0 2rem;
+}
+
+// ---- Project page: header -------------------------------------------------
+
+.page-head {
+  position: relative;
+  padding: 9rem 0 4rem;
+  overflow: hidden;
+  border-bottom: 1px solid $line;
+}
+
+.page-head__contours { opacity: 0.8; }
+
+.page-head__inner {
+  position: relative;
+  max-width: $measure + 4rem;
+}
+
+.page-head__title {
+  font-family: $display;
+  font-weight: 600;
+  font-size: clamp(3.4rem, 9vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $bright;
+  margin: 0 0 1.25rem;
+}
+
+.page-head__subtitle {
+  font-size: 1.3rem;
+  line-height: 1.45;
+  color: $bright;
+  margin: 0;
+}
+
+// ---- Project page: body ---------------------------------------------------
+
+.post-content {
+  max-width: $measure + 4rem;
+  margin: 0 auto;
+  padding: 3.5rem 2rem 6rem;
+  counter-reset: section;
+
+  p, li { color: $text; }
+
+  > p:first-child img { margin-top: 0; }
+
+  strong { color: $bright; font-weight: 600; }
+
+  a {
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba($accent, 0.45);
+
+    &:hover { text-decoration-color: $accent; }
+  }
+
+  h2 {
+    counter-increment: section;
+    font-family: $display;
+    font-weight: 600;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $bright;
+    margin: 4rem 0 1.25rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid $line;
+
+    &::before {
+      content: counter(section, decimal-leading-zero);
+      display: block;
+      font-family: $mono;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: $accent;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  h3 {
+    font-family: $body;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: $bright;
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  img {
+    display: block;
+    width: auto;
+    max-height: 80vh;
+    margin: 2.5rem 0 0.75rem;
+  }
+
+  img.photo { width: 100%; max-height: none; }
+
+  // Plots are white-background PNGs; give them a frame so they sit on the page.
+  img[src$=".png"] { border: 1px solid $line; }
+
+  // The italic line right after an image or video is its caption.
+  p:has(> em:only-child) {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: $muted;
+    border-left: 2px solid rgba($accent, 0.6);
+    padding-left: 1em;
+    margin: 0 0 2.5rem;
+
+    em { font-style: normal; }
+  }
+
+  code {
+    font-family: $mono;
+    font-size: 0.85em;
+    background: $bg-2;
+    border: 1px solid $line;
+    padding: 0.1em 0.35em;
+  }
+
+  pre {
+    font-family: $mono;
+    font-size: 0.85rem;
+    background: $bg-2;
+    border: 1px solid $line;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+
+    code { background: none; border: 0; padding: 0; }
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid $line;
+    margin: 4rem 0 2rem;
+  }
+
+  hr ~ p {
+    font-size: 0.9rem;
+    color: $muted;
+  }
+
+  iframe { display: block; }
+}
+
+// ---- Spec table -----------------------------------------------------------
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 0.95rem;
+
+  thead { display: none; }
+
+  td {
+    border-bottom: 1px solid $line;
+    padding: 0.7em 0;
+    vertical-align: top;
+  }
+
+  td:first-child {
+    font-family: $mono;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $muted;
+    width: 32%;
+    padding-right: 1.5em;
+    padding-top: 1em;
+  }
+
+  td:last-child { color: $bright; }
+}
+
+// ---- Contents box ---------------------------------------------------------
 
 .toc {
-  margin: 2.2em 0 2.8em;
-  max-width: 42rem;
+  border-top: 1px solid $line;
+  border-bottom: 1px solid $line;
+  padding: 1.5rem 0 1.25rem;
+  margin: 0 0 3.5rem;
 
   .toc-heading {
-    border-top: 0;
-    margin-top: 0;
-    padding-top: 0;
-    font-size: 1.33em;
+    counter-increment: none;
+    font-family: $mono;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: $muted;
+    border: 0;
+    padding: 0;
+    margin: 0 0 1rem;
+
+    &::before { content: none; }
   }
 
   ul {
     list-style: none;
-    padding-left: 0;
-    margin-left: 0;
-    margin-bottom: 0;
-  }
-
-  li { margin-bottom: 0.5em; line-height: 1.5; }
-  .gloss { color: $grey-color; }
-}
-
-// Float it beside the text only when there is genuinely room for it.
-@media screen and (min-width: 1500px) {
-  .toc {
-    position: fixed;
-    top: 9rem;
-    left: calc((100vw - 60rem) / 2 - 13rem);
-    width: 11.5rem;
+    padding: 0;
     margin: 0;
+    counter-reset: toc;
+  }
 
-    .toc-heading { font-size: 1em; }
-    li { font-size: 0.85em; margin-bottom: 0.6em; line-height: 1.4; }
-    .gloss { display: none; }
+  li {
+    counter-increment: toc;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 0.6em;
+
+    &::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: $mono;
+      font-size: 0.75rem;
+      color: $accent;
+      margin-right: 1em;
+    }
+  }
+
+  a { text-decoration: none; color: $bright; }
+  a:hover { text-decoration: underline; }
+  .gloss { color: $muted; }
+}
+
+// ---- Footer ---------------------------------------------------------------
+
+.site-footer {
+  border-top: 1px solid $line;
+  padding: 4rem 0 3rem;
+}
+
+.site-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+
+  a {
+    font-family: $display;
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $bright;
+
+    &:hover { text-decoration: underline; text-underline-offset: 4px; }
   }
 }
 
-// ---- Small screens ------------------------------------------------------
-
-@media screen and (max-width: 600px) {
-  .post-title { font-size: 2.1rem; }
-  .post-content img { width: 100%; }
+.site-footer__links a[href^="mailto"] {
+  font-family: $mono;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
 }
+
+.site-footer__fine {
+  font-family: $mono;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: $muted;
+  margin: 0;
+}
+
+// ---- Small screens --------------------------------------------------------
+
+@media (max-width: 760px) {
+  body { font-size: 17px; }
+
+  .wrap,
+  .post-content { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+  .site-header__inner { min-height: 3.75rem; }
+  .brand { font-size: 0.85rem; letter-spacing: 0.18em; }
+  .site-nav { gap: 0.9rem; }
+  .site-nav a { font-size: 0.75rem; letter-spacing: 0.14em; }
+
+  .hero { min-height: 78vh; padding: 7rem 0 3.5rem; }
+
+  .about { padding-top: 3rem; padding-bottom: 4rem; }
+
+  .about__text p { font-size: 1.08rem; }
+
+  .projects { padding-top: 4rem; }
+
+  .project,
+  .project:nth-of-type(even) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 2.5rem 0;
+
+    .project__media { order: 0; }
+  }
+
+  .page-head { padding: 6.5rem 0 3rem; }
+
+  .post-content table td:first-child { width: 38%; }
+}
+

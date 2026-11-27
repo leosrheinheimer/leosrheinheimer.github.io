@@ -1,0 +1,11 @@
+<header class="site-header{% if page.layout == 'home' %} site-header--overlay{% endif %}">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="{{ '/' | relative_url }}">Leo Rheinheimer</a>
+    <nav class="site-nav" aria-label="Main">
+      {% for project in site.data.projects %}
+      <a href="{{ project.url | relative_url }}"{% if page.url == project.url %} aria-current="page"{% endif %}>{{ project.title }}</a>
+      {% endfor %}
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>

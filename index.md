@@ -1,5 +1,6 @@
 ---
 layout: home
+tagline: I build robotic hardware and the control systems that run it.
 ---
 
 I'm a mechanical engineering student and will be attending USC Viterbi in spring 2027,
@@ -7,17 +8,3 @@ currently taking a semester at Santa Monica College. During the summer of 2025 I
 the manufacturing engineering team at Boeing Defense, Space & Security on the integrated
 payload array for the O3b mPOWER satellites, where I designed and manufactured a tool for
 cutting gaskets. I work on robotics and control systems.
-
-## Projects
-
-**[REACH](reach/)** — a 4-DOF robotic arm built from salvaged FRC hardware, with closed-loop
-position control on three joints and an electromagnet end effector. Writeup covers the design
-tradeoffs, the four things that broke, and what I would do differently.
-
-**[HOLD](hold/)** — a single-joint torque test rig where I wrote all the firmware. I predicted the
-holding torque from statics, locked the prediction before testing, missed by a factor of two, and
-traced the miss to gearbox losses at breakaway.
-
-## Contact
-
-[leosrheinheimer@gmail.com](mailto:leosrheinheimer@gmail.com) · [LinkedIn](https://www.linkedin.com/in/leorheinheimer/)

@@ -1,14 +1,18 @@
 ---
 layout: page
 title: HOLD
+subtitle: A single-joint torque test rig
 ---
 
-<style>
-  .post-content img { max-width: 42rem; }
-  .post-content img.photo { max-width: 34rem; }
-</style>
+![The HOLD rig on its baseplate with washers on the 300 mm hole](hero.jpg){: .photo}
 
-A single-joint torque test rig
+*The rig, with washers taped on at the 300 mm hole.*
+
+HOLD is one motorized joint with an arm on it. I used it to test whether I could predict, from
+statics, how much torque it takes to hold a known load at a given angle. I committed the prediction
+to the repo before running the sweep, so I couldn't change it after seeing the data. It was off by
+about a factor of two. Most of this page is about finding out why, which came down to gearbox
+friction at breakaway.
 
 <nav class="toc" markdown="1">
 
@@ -24,16 +28,6 @@ A single-joint torque test rig
 - [What I'd do differently](#what-id-do-differently)
 
 </nav>
-
-![The HOLD rig on its baseplate with washers on the 300 mm hole](hero.jpg){: .photo}
-
-*The rig, with washers taped on at the 300 mm hole.*
-
-HOLD is one motorized joint with an arm on it. I used it to test whether I could predict, from
-statics, how much torque it takes to hold a known load at a given angle. I committed the prediction
-to the repo before running the sweep, so I couldn't change it after seeing the data. It was off by
-about a factor of two. Most of this page is about finding out why, which came down to gearbox
-friction at breakaway.
 
 <div style="max-width:720px;margin:2.2em 0 0.7em;">
   <iframe style="width:100%;aspect-ratio:16/9;border:0;"

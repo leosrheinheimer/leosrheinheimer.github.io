@@ -1,0 +1,37 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="hero__contours" aria-hidden="true"></div>
+  <div class="wrap hero__inner">
+    <p class="label">Mechanical engineering · USC Viterbi</p>
+    <h1 class="hero__title">Leo<br>Rheinheimer</h1>
+    {% if page.tagline %}<p class="hero__tagline">{{ page.tagline }}</p>{% endif %}
+  </div>
+</section>
+
+
+<section class="projects wrap" aria-label="Projects">
+  <p class="label">Projects</p>
+  {% for project in site.data.projects %}
+  <a class="project" href="{{ project.url | relative_url }}">
+    <div class="project__media">
+      <img src="{{ project.image | relative_url }}" alt="" loading="lazy" style="object-position: {{ project.position }};">
+    </div>
+    <div class="project__body">
+      <p class="project__meta">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }} / {{ project.year }}</p>
+      <h2 class="project__title">{{ project.title }}</h2>
+      <p class="project__summary">{{ project.summary }}</p>
+      <p class="project__tags">{{ project.tags }}</p>
+      <span class="button">Read the write-up</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+<section class="about wrap">
+  <p class="label">About</p>
+  <div class="about__text">
+    {{ content }}
+  </div>
+</section>

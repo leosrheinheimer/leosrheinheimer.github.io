@@ -1,24 +1,8 @@
 ---
 layout: page
 title: REACH
+subtitle: Robotic Extension for Autonomous Component Handoff
 ---
-
-Robotic Extension for Autonomous Component Handoff
-
-<nav class="toc" markdown="1">
-
-## Contents
-{: .toc-heading}
-
-- [Goals and constraints](#goals)<span class="gloss">, what shipped, what I cut, and what free hardware cost</span>
-- [Design decisions](#design)<span class="gloss">, the electromagnet swap, the pliers, CAN over PWM, and the gearing</span>
-- [Architecture](#architecture)<span class="gloss">, power domains, threads, encoder math, and the two interfaces</span>
-- [What broke](#what-broke)<span class="gloss">, four failures, including a joint that overran and broke its own mount</span>
-- [What didn't ship](#what-didnt-ship)<span class="gloss">, computer vision and inverse kinematics</span>
-- [What I'd do differently](#what-id-do-differently)
-- [Unresolved](#unresolved)<span class="gloss">, three problems I never got to the bottom of</span>
-
-</nav>
 
 ![The arm on the bench, wired to battery and power distribution](build-bench.jpg)
 
@@ -36,6 +20,21 @@ a web browser. The arm only reaches positions I physically taught it, and I driv
 handoff by clicking through those saved positions one at a time. The pickup and handoff ran end to
 end in testing, with the pliers lifted off a flat surface and carried to a position where I could
 take them off the magnet by hand.
+
+<nav class="toc" markdown="1">
+
+## Contents
+{: .toc-heading}
+
+- [Goals and constraints](#goals)<span class="gloss">, what shipped, what I cut, and what free hardware cost</span>
+- [Design decisions](#design)<span class="gloss">, the electromagnet swap, the pliers, CAN over PWM, and the gearing</span>
+- [Architecture](#architecture)<span class="gloss">, power domains, threads, encoder math, and the two interfaces</span>
+- [What broke](#what-broke)<span class="gloss">, four failures, including a joint that overran and broke its own mount</span>
+- [What didn't ship](#what-didnt-ship)<span class="gloss">, computer vision and inverse kinematics</span>
+- [What I'd do differently](#what-id-do-differently)
+- [Unresolved](#unresolved)<span class="gloss">, three problems I never got to the bottom of</span>
+
+</nav>
 
 <div style="max-width:360px;margin:2.2em 0 0.7em;">
   <iframe style="width:100%;aspect-ratio:9/16;border:0;"

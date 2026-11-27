@@ -15,12 +15,12 @@ A single-joint torque test rig
 ## Contents
 {: .toc-heading}
 
-- [Why I built it](#why)
+- [Why I built HOLD](#why)
 - [The rig](#rig)
 - [Software](#software)
 - [The prediction](#prediction)
 - [The miss](#miss)
-- [Why it missed](#why-it-missed)
+- [Why (I think) it missed](#why-it-missed)
 - [What I'd do differently](#what-id-do-differently)
 
 </nav>
@@ -32,8 +32,8 @@ A single-joint torque test rig
 HOLD is one motorized joint with an arm on it. I used it to test whether I could predict, from
 statics, how much torque it takes to hold a known load at a given angle. I committed the prediction
 to the repo before running the sweep, so I couldn't change it after seeing the data. It was off by
-about a factor of two. Most of this page is about finding out why, which came down to the gearbox
-losing around half the torque that goes through it when the arm starts to move.
+about a factor of two. Most of this page is about finding out why, which came down to gearbox
+friction at breakaway.
 
 <div style="max-width:720px;margin:2.2em 0 0.7em;">
   <iframe style="width:100%;aspect-ratio:16/9;border:0;"
@@ -42,11 +42,11 @@ losing around half the torque that goes through it when the arm starts to move.
     allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
 </div>
 
-*One threshold trial. The motor duty goes up 0.25% at a time until the arm breaks loose and rises.*
+*One threshold trial. The motor duty goes down 0.25% at a time until the arm breaks loose and falls.*
 
 | Spec | |
 |---|---|
-| Motor | JGA25-370 12 V gearmotor, 150 RPM |
+| Motor | JGA25-370 12 V gearmotor (from Amazon), 150 RPM |
 | Encoder | Motor side, 1245.5 ticks per output turn (measured) |
 | Electronics | Raspberry Pi Pico (MicroPython), Cytron MD10C, bench supply at 12 V |
 | Arm | Printed PLA, 49.03 g, load holes every 50 mm from 150 to 300 mm |
@@ -54,16 +54,16 @@ losing around half the torque that goes through it when the arm starts to move.
 | Zeroing | Servo-driven pin, repeatable to 0.6° |
 | Result | Prediction missed by 41 to 111%; within 22% after correcting for gearbox losses |
 
-## Why I built it {#why}
+## Why I built HOLD {#why}
 
 On [REACH](../reach/), my last project, I did the mechanical and electrical work, and most of the
 control code was written by Claude Code from my spec. For HOLD I wrote all of the firmware on the
-Pico myself, starting with very little Python. I used AI to review my code and point out bugs, not
-to write it. The two scripts that make the final plots are the exception: Gemini generated those
-from my spec.
+Raspberry Pi Pico myself, starting with very little knowledge of Python syntax. I used AI to review
+my code and point out bugs, not to write it. The two scripts that make the final plots are the
+exception: Gemini generated those from my spec.
 
-I also didn't want another project where the result is that it moves. So I set it up as a test
-with a number at the end: predict the holding torque, measure it, and compare.
+I wanted a project where I could quantify the result, so I set HOLD up as a test with a number at
+the end: predict the holding torque, measure it, and compare.
 
 ## The rig {#rig}
 
@@ -73,18 +73,18 @@ with a number at the end: predict the holding torque, measure it, and compare.
 corner.*
 
 The motor is a 12 V JGA25-370 gearmotor driven by a Cytron MD10C, controlled by a Raspberry Pi Pico
-running MicroPython. Everything sits on a printed baseplate screwed to a 2×4 so nothing shifts
-between sessions, and torque gets measured against a kitchen scale.
+running MicroPython. Everything sits on a printed baseplate screwed to a 2×4, so I could reliably
+clamp it down to the testing bench, and holding torque was measured against a kitchen scale.
 
 The arm went through four versions. The first was aluminum on a set-screw coupler, which kept
 loosening under the back-and-forth of the position loop (the same thing happened on REACH). A
-goBILDA clamping hub fixed that. The current arm is printed, 300 mm long, with load holes every
-50 mm. The length is for resolution. A washer at 150 mm moved the motor duty by about as much as
-the scatter between trials, and doubling the radius doubles the signal.
+goBILDA clamping hub fixed that. The current arm is printed, 300 mm long (the limit for my 3D
+printer), with load holes every 50 mm. The length is for resolution: a washer further out shifts
+the motor duty more, so smaller differences show up above the noise.
 
-To zero the encoder, the arm needs a hard stop at a known angle. The first one was a fixed bolt,
-until the washers on the loaded arm started hitting it. Now it's a printed lever on a hobby servo
-that swings out at +155.9°, past vertical, and swings back out of the way for testing.
+To zero the encoder, the arm needs a hard stop at a known angle. The first one was a fixed bolt
+drilled into the 2×4. I wanted to learn more servo control, so I replaced it with a printed lever on
+a hobby servo that swings out to zero the arm and retracts to clear the arm's path during testing.
 
 ![The zero-pin servo next to the arm hub](pin.jpg){: .photo}
 
@@ -130,12 +130,17 @@ committed it before the sweep.
 measurement up to the lift measurement on two different days. The dots and the dashed blue line are
 the corrected estimate explained below.*
 
-It read 41 to 111% high at every angle. The calibration checked out when I redid it (within 4%),
-the motor wasn't hot, and rerunning with loaded and unloaded trials back to back made the error
-bigger, so it wasn't drift either. The prediction stays as committed, and everything after it is
-reported next to it.
+The measured load torque read 41 to 111% high at every angle. The calibration wasn't the problem,
+since recalibrating gave a slope within 4% of the original. The motor wasn't hot, and rerunning
+with loaded and unloaded trials back to back made the error bigger, so it wasn't drift either.
 
-## Why it missed {#why-it-missed}
+It wasn't random scatter. Most sets of trials agreed to within 0.5% duty, and a lot of them were
+identical, while the miss was 2 to 7% duty. It also showed up the same way on both test days.
+
+I left the committed prediction as it was. The point of locking it was to keep me honest, so
+everything below is reported next to it.
+
+## Why (I think) it missed {#why-it-missed}
 
 Gears lose some torque to friction, and the loss grows with the load. If the gearbox passes a
 fraction η of the torque, lifting a load takes about load ÷ η from the motor. Going the other way,
@@ -157,8 +162,8 @@ against a scale, static friction only resists as much as it has to. At breakaway
 and working against the motor. It's the same gearbox in a different state, and I calibrated in one
 and measured in the other.
 
-I haven't explained the last 22%. My best guess is that the gearbox loses more when the motor drives
-it than when it's back-driven. The full error analysis is
+I haven't explained the last 22%. My best guess is that the gearbox loses more torque when the
+motor drives it than when it's back-driven. The full error analysis is
 [in the repo](https://github.com/leosrheinheimer/HOLD/blob/main/errorAnalysis.md).
 
 ## What I'd do differently {#what-id-do-differently}
